@@ -1,7 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.*;
 
 public class registrationPage {
+
+    // row = user
+    // col = emails
+    static String[][] userData = new String[10][3];
+    static int userIndex = 0;
+
     public void regisPage() {
         JFrame frame = new JFrame("Registration Page");
         frame.setSize(800, 450);
@@ -136,7 +143,35 @@ public class registrationPage {
         registerButton.setFocusPainted(false);
 
         registerButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(frame, "Registered successfully!");
+
+            String email = emailField.getText().trim();
+            String username = usernameField.getText().trim();
+            String password = new String(passwordField.getPassword()).trim();
+
+            if (email.endsWith("@gmail.com")) {
+                // Saving the userData
+                if (userIndex < userData.length) {
+                    userData[userIndex][0] = email;
+                    userData[userIndex][1] = username;
+                    userData[userIndex][2] = password;
+                    userIndex++;
+                    System.out.println("user email:" + email + "users name:" + username + "userspw:" + password);
+                    JOptionPane.showMessageDialog(frame, "Registered successfully!");
+                } 
+                 else {
+                    JOptionPane.showMessageDialog(frame,
+                            "Array is full",
+                            "Alert",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }// Email Validation
+             else {
+                JOptionPane.showMessageDialog(null,
+                        "Please enter a valid email address!",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
         });
 
         // Add all components to frame
